@@ -1,20 +1,19 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { View, Text } from "react-native";
 import { mainColor } from "./constants/Colors";
+import { AppLoading } from "expo";
+import MainNavigator from "./navigation/Navigator";
+// import { useFonts } from "@use-expo/font";
 
 export default function App() {
-  return (
-    <View
-      style={{
-        backgroundColor: mainColor,
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Text style={{ color: "#ffffff" }}> Okay </Text>
-      <StatusBar />
-    </View>
-  );
+  // let [fontsLoaded] = useFonts({
+  //   PTSans: require("./assets/fonts/PTSans-Regular.ttf"),
+  //   Raleway: require("./assets/fonts/Raleway-Regular.ttf"),
+  // });
+
+  // if (!fontsLoaded) {
+  //   return <AppLoading />;
+  // }
+
+  return <MainNavigator />;
 }
