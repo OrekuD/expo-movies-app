@@ -23,9 +23,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "yellow",
     width: width * 0.45,
-    height: 270,
-    borderRadius: 10,
-    marginBottom: 20,
+    height: width * 0.7,
+    borderRadius: 5,
+    marginBottom: (width * 0.1) / 3,
     alignItems: "center",
     justifyContent: "center",
   },

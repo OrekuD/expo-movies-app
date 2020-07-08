@@ -9,6 +9,7 @@ export default function App() {
   let [fontsLoaded] = useFonts({
     PTSans: require("./assets/fonts/PTSans-Regular.ttf"),
     Raleway: require("./assets/fonts/Raleway-Regular.ttf"),
+    Alegreya: require("./assets/fonts/Alegreya-Regular.ttf"),
   });
 
   if (!fontsLoaded) {

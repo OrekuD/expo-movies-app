@@ -4,6 +4,7 @@ import { mainColor } from "../constants/Colors";
 import { Header, Card, Categories } from "../components";
 import { dummy } from "../dummy-data";
 import { StackScreenProps } from "@react-navigation/stack";
+import { width } from "../constants/Layout";
 
 const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   const header = () => (
@@ -18,7 +19,7 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header navigation={navigation} />
       <FlatList
         data={[""]}
         ListHeaderComponent={header}
