@@ -13,13 +13,14 @@ const Header: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     width: width,
-    height: 100,
+    height: 70,
     justifyContent: "center",
     paddingLeft: 20,
   },
   text: {
     fontSize: 22,
     color: "#ffffff",
+    fontFamily: "Raleway",
   },
 });
 

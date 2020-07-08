@@ -3,24 +3,31 @@ import { Text, View, StyleSheet, FlatList, ScrollView } from "react-native";
 import { mainColor } from "../constants/Colors";
 import { Header, Card, Categories } from "../components";
 import { dummy } from "../dummy-data";
+import { StackScreenProps } from "@react-navigation/stack";
 
-const HomeScreen: React.FC = () => {
+const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
+  const header = () => (
+    <FlatList
+      horizontal
+      data={dummy}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <Card data={item} navigation={navigation} />}
+      showsHorizontalScrollIndicator={false}
+    />
+  );
+
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Header />
-        <View style={styles.row}>
-          <FlatList
-            horizontal
-            data={dummy}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <Card data={item} />}
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
-        <Categories />
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <Header />
+      <FlatList
+        data={[""]}
+        ListHeaderComponent={header}
+        ListHeaderComponentStyle={styles.row}
+        keyExtractor={(item) => Math.random().toString()}
+        renderItem={({ item }) => <View />}
+        ListFooterComponent={() => <Categories navigation={navigation} />}
+      />
+    </View>
   );
 };
 

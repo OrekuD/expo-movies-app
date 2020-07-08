@@ -1,15 +1,20 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { RectButton } from "react-native-gesture-handler";
 
 interface Props {
   data: {};
+  navigation?: any;
 }
 
-const Card: React.FC<Props> = ({ data }) => {
+const Card: React.FC<Props> = ({ data, navigation }) => {
   return (
-    <View style={styles.container}>
+    <RectButton
+      onPress={() => navigation.navigate("Movie", { data })}
+      style={styles.container}
+    >
       <Text style={{ color: "#ffffff" }}> Okay </Text>
-    </View>
+    </RectButton>
   );
 };
 
