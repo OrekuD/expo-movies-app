@@ -38,11 +38,6 @@ const Categories: React.FC<Props> = ({ navigation }) => {
       component: <Category navigation={navigation} name="Comedy" id={35} />,
     },
     {
-      id: 27,
-      name: "Horror",
-      component: <Category navigation={navigation} name="Horror" id={27} />,
-    },
-    {
       id: 80,
       name: "Crime",
       component: <Category navigation={navigation} name="Crime" id={80} />,
@@ -56,6 +51,11 @@ const Categories: React.FC<Props> = ({ navigation }) => {
       id: 14,
       name: "Fantasy",
       component: <Category navigation={navigation} name="Fantasy" id={14} />,
+    },
+    {
+      id: 27,
+      name: "Horror",
+      component: <Category navigation={navigation} name="Horror" id={27} />,
     },
     {
       id: 10749,

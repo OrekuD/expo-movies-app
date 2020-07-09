@@ -7,6 +7,8 @@ import {
   ActivityIndicator,
   FlatList,
   Alert,
+  Platform,
+  StatusBar,
 } from "react-native";
 import { mainColor } from "../constants/Colors";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: mainColor,
-    paddingTop: 20,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 5 : 40,
   },
   textInput: {
     width: width * 0.95,

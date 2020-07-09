@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, FlatList } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import { dummy } from "../dummy-data";
 import CategoryCard from "./CategoryCard";
 import { width } from "../constants/Layout";
-import { ResponseProps } from "../types";
+import { ResponseObj } from "../types";
 
 interface Props {
   name?: string;
@@ -12,13 +18,21 @@ interface Props {
 }
 
 const Category: React.FC<Props> = ({ name, navigation, id }) => {
-  const [data, setData] = useState<Array<ResponseProps>>([]);
+  const [data, setData] = useState<Array<ResponseObj>>([]);
+  let isActive = true;
 
   useEffect(() => {
     fetchData();
+
+    return () => {
+      isActive = false;
+    };
   }, [id]);
 
   const fetchData = async () => {
+    if (!isActive) {
+      return;
+    }
     const response = await fetch(
       `https://api.themoviedb.org/3/discover/movie?api_key=005d6a62314e432e6fe64e784f23f799&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2017-01-01&primary_release_date.lte=2020-12-31&vote_average.gte=6&with_genres=${id}`
     );
@@ -39,6 +53,13 @@ const Category: React.FC<Props> = ({ name, navigation, id }) => {
         }}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={() => <View style={{ height: 20 }} />}
+        ListEmptyComponent={() => (
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <ActivityIndicator size="large" color="#ffffff" />
+          </View>
+        )}
       />
     </View>
   );

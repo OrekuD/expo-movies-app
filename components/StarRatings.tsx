@@ -4,7 +4,6 @@ import { AntDesign } from "@expo/vector-icons";
 
 interface Props {
   rating: number;
-  count: number;
 }
 
 const starValue = (rating: number) => {
@@ -21,113 +20,104 @@ const starValue = (rating: number) => {
   }
 };
 
-const StarRatings: React.FC<Props> = ({ rating, count }) => {
+const StarRatings: React.FC<Props> = ({ rating }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        {starValue(rating) === 5 && (
-          <>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-          </>
-        )}
-        {starValue(rating) === 4 && (
-          <>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="staro" color="gold" size={18} />
-            </View>
-          </>
-        )}
-        {starValue(rating) === 3 && (
-          <>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="staro" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="staro" color="gold" size={18} />
-            </View>
-          </>
-        )}
-        {starValue(rating) === 2 && (
-          <>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="staro" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="staro" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="staro" color="gold" size={18} />
-            </View>
-          </>
-        )}
-        {starValue(rating) === 1 && (
-          <>
-            <View style={styles.star}>
-              <AntDesign name="star" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="staro" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="staro" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="staro" color="gold" size={18} />
-            </View>
-            <View style={styles.star}>
-              <AntDesign name="staro" color="gold" size={18} />
-            </View>
-          </>
-        )}
-      </View>
-      <View style={{ ...styles.row, justifyContent: "space-between" }}>
-        <View style={{ ...styles.row }}>
-          <Text style={styles.ratingText}> {rating} </Text>
-          <Text style={styles.overallText}> / 10 </Text>
-        </View>
-        <Text style={styles.votesText}> {count} votes</Text>
-      </View>
+      {starValue(rating) === 5 && (
+        <>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+        </>
+      )}
+      {starValue(rating) === 4 && (
+        <>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="staro" color="gold" size={18} />
+          </View>
+        </>
+      )}
+      {starValue(rating) === 3 && (
+        <>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="staro" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="staro" color="gold" size={18} />
+          </View>
+        </>
+      )}
+      {starValue(rating) === 2 && (
+        <>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="staro" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="staro" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="staro" color="gold" size={18} />
+          </View>
+        </>
+      )}
+      {starValue(rating) === 1 && (
+        <>
+          <View style={styles.star}>
+            <AntDesign name="star" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="staro" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="staro" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="staro" color="gold" size={18} />
+          </View>
+          <View style={styles.star}>
+            <AntDesign name="staro" color="gold" size={18} />
+          </View>
+        </>
+      )}
     </View>
   );
 };
@@ -135,26 +125,12 @@ const StarRatings: React.FC<Props> = ({ rating, count }) => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-  },
-  row: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 5,
   },
   star: {
     marginRight: 5,
-  },
-  ratingText: {
-    fontSize: 22,
-    fontWeight: "bold",
-  },
-  overallText: {
-    marginTop: 2,
-    color: "lightslategrey",
-  },
-  votesText: {
-    fontSize: 20,
-    marginTop: 7,
   },
 });
 

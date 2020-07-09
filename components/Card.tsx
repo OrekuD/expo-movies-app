@@ -9,10 +9,10 @@ import {
 } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { width } from "../constants/Layout";
-import { ResponseProps } from "../types";
+import { ResponseObj } from "../types";
 
 interface Props {
-  data: ResponseProps;
+  data: ResponseObj;
   navigation?: any;
 }
 

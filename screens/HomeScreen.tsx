@@ -5,11 +5,11 @@ import { Header, Card, Categories } from "../components";
 import { dummy } from "../dummy-data";
 import { StackScreenProps } from "@react-navigation/stack";
 import { width } from "../constants/Layout";
-import { ResponseProps } from "../types";
+import { ResponseObj } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
 
 const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
-  const [data, setData] = useState<Array<ResponseProps>>([]);
+  const [data, setData] = useState<Array<ResponseObj>>([]);
 
   useEffect(() => {
     fetchData();
@@ -36,7 +36,6 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
-      <Text style={styles.text}> Trending </Text>
       <FlatList
         data={[""]}
         ListHeaderComponent={header}
