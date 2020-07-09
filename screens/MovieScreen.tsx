@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -6,28 +6,15 @@ import {
   FlatList,
   ScrollView,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { mainColor } from "../constants/Colors";
-import { Header, Card, Categories } from "../components";
+import { Header, Card, Categories, StarRatings } from "../components";
 import { dummy } from "../dummy-data";
 import { StackScreenProps } from "@react-navigation/stack";
 import { height, width } from "../constants/Layout";
 import { ResponseProps } from "../types";
-import { AntDesign } from "@expo/vector-icons";
-
-const starValue = (rating: number) => {
-  if (rating > 9) {
-    return 5;
-  } else if (rating > 8) {
-    return 4;
-  } else if (rating > 6) {
-    return 3;
-  } else if (rating > 4) {
-    return 2;
-  } else {
-    return 1;
-  }
-};
+import { MOVIE_DB_API_KEY } from "../constants/Api";
 
 const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
   const data: ResponseProps = route.params.data;
@@ -42,7 +29,39 @@ const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
     vote_count,
     adult,
     original_language,
+    id,
   } = data;
+
+  const [movieDetails, setMovieDetails] = useState<object>({});
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${MOVIE_DB_API_KEY}&language=en-US`
+    );
+    const data = await response.json();
+    console.log(data);
+    // setMovieDetails(data);
+  };
+
+  if (!movieDetails.title) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: mainColor,
+        }}
+      >
+        <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
@@ -64,8 +83,7 @@ const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
             <View style={styles.movieDetails}>
               <Text style={styles.title}>{title}</Text>
               <View style={styles.rating}>
-                <AntDesign name="star" color="gold" size={20} />
-                <Text style={styles.vote_count}>{vote_count}</Text>
+                <StarRatings rating={vote_average} count={vote_count} />
               </View>
             </View>
           </View>
@@ -79,7 +97,7 @@ const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    backgroundColor: mainColor,
+    backgroundColor: "#ffffff",
   },
   container: {
     flex: 1,
@@ -106,21 +124,22 @@ const styles = StyleSheet.create({
   },
   content: {
     height: "100%",
-    backgroundColor: "#ffffff",
   },
   topSection: {
     flexDirection: "row",
-    height: 150,
-    backgroundColor: "#ffffff",
     paddingHorizontal: 20,
   },
   movieDetails: {
     paddingLeft: 10,
     paddingTop: 10,
+    flex: 1,
   },
   title: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "bold",
+  },
+  rating: {
+    width: "100%",
   },
 });
 
