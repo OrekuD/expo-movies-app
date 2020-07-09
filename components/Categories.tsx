@@ -71,12 +71,6 @@ const Categories: React.FC<Props> = ({ navigation }) => {
     },
   ];
 
-  const categories = [
-    { id: Math.random().toString(), name: "Action", index: 0 },
-    { id: Math.random().toString(), name: "Fantasy", index: 1 },
-    { id: Math.random().toString(), name: "Romance", index: 2 },
-  ];
-
   return (
     <View style={styles.container}>
       <Text style={styles.text}> Browse by categories </Text>

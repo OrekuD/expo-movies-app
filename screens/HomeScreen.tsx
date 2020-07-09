@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, FlatList, ScrollView } from "react-native";
 import { mainColor } from "../constants/Colors";
 import { Header, Card, Categories } from "../components";
 import { dummy } from "../dummy-data";
 import { StackScreenProps } from "@react-navigation/stack";
 import { width } from "../constants/Layout";
+import { ResponseProps } from "../types";
+import { MOVIE_DB_API_KEY } from "../constants/Api";
 
 const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
+  const [data, setData] = useState<Array<ResponseProps>>([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/trending/movie/week?api_key=${MOVIE_DB_API_KEY}`
+    );
+    const data = await response.json();
+    setData(data.results);
+  };
+
   const header = () => (
     <FlatList
       horizontal
-      data={dummy}
-      keyExtractor={(item) => item.id}
+      data={data}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => <Card data={item} navigation={navigation} />}
       showsHorizontalScrollIndicator={false}
     />
@@ -20,6 +36,7 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
+      <Text style={styles.text}> Trending </Text>
       <FlatList
         data={[""]}
         ListHeaderComponent={header}
@@ -40,7 +57,14 @@ const styles = StyleSheet.create({
   row: {
     marginHorizontal: 10,
     overflow: "hidden",
-    borderRadius: 20,
+    borderRadius: 10,
+  },
+  text: {
+    fontSize: 32,
+    fontWeight: "bold",
+    marginLeft: 10,
+    color: "#ffffff",
+    marginBottom: 20,
   },
 });
 

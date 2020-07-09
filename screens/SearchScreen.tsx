@@ -15,8 +15,8 @@ import { dummy } from "../dummy-data";
 import { CategoryCard } from "../components";
 
 const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
-  const [searchTerm, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchTerm, setSearch] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<Array<{}>>([]);
 
   const searchForMovies = () => {
     if (searchTerm.trim().length === 0) {

@@ -30,7 +30,11 @@ const SearchStackScreen: React.FC = () => {
 const MainNavigator: React.FC = () => {
   return (
     <NavigationContainer>
-      <StatusBar barStyle="light-content" backgroundColor={mainColor} />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
       <StackScreen />
     </NavigationContainer>
   );
