@@ -17,7 +17,15 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
 
   const fetchData = async () => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/trending/movie/week?api_key=${MOVIE_DB_API_KEY}`
+      `https://api.themoviedb.org/3/trending/movie/day?api_key=${MOVIE_DB_API_KEY}`,
+      {
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          // Pragma: "no-cache",
+          // Expires: 0,
+          // cache: "no-store",
+        },
+      }
     );
     const data = await response.json();
     setData(data.results);

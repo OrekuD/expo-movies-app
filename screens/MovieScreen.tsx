@@ -18,53 +18,73 @@ import { height, width } from "../constants/Layout";
 import { ResponseObj, Movie } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
 import { RectButton } from "react-native-gesture-handler";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Fontisto, Entypo } from "@expo/vector-icons";
 
 const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
   const data: ResponseObj = route.params.data;
   const {
-    poster_path,
-    backdrop_path,
-    title,
-    overview,
-    popularity,
-    release_date,
-    vote_average,
-    vote_count,
-    adult,
-    original_language,
+    // poster_path,
+    // backdrop_path,
+    // title,
+    // overview,
+    // popularity,
+    // release_date,
+    // vote_average,
+    // vote_count,
+    // adult,
+    // original_language,
     id,
   } = data;
 
   const [movieDetails, setMovieDetails] = useState<Movie>({});
+  const {
+    title,
+    overview,
+    poster_path,
+    backdrop_path,
+    vote_average,
+    vote_count,
+    genres,
+    popularity,
+    release_date,
+    revenue,
+    runtime,
+    status,
+    tagline,
+  } = movieDetails;
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    // const response = await fetch(
-    //   `https://api.themoviedb.org/3/movie/${id}?api_key=${MOVIE_DB_API_KEY}&language=en-US`
-    // );
-    // const data = await response.json();
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${MOVIE_DB_API_KEY}&language=en-US`,
+      {
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      }
+    );
+    const data = await response.json();
     // console.log(data);
-    // setMovieDetails(data);
+    setMovieDetails(data);
   };
 
-  // if (!movieDetails.title) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         alignItems: "center",
-  //         justifyContent: "center",
-  //         backgroundColor: mainColor,
-  //       }}
-  //     >
-  //       <ActivityIndicator size="large" color="#ffffff" />
-  //     </View>
-  //   );
-  // }
+  if (!movieDetails.title) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: mainColor,
+        }}
+      >
+        <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -72,7 +92,7 @@ const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
         onPress={() => navigation.goBack()}
         style={styles.closeButton}
       >
-        <Ionicons name="ios-arrow-round-back" size={30} color="#000000" />
+        <Ionicons name="md-arrow-round-back" size={20} color={mainColor} />
       </RectButton>
       <View style={styles.container}>
         <View style={styles.backdrop_imageContainer}>
@@ -103,10 +123,38 @@ const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
                   </View>
                   <Text style={styles.votesText}> {vote_count} votes</Text>
                 </View>
+                <View style={styles.row}>
+                  <Text style={styles.runtimeText}> {runtime} min | </Text>
+                  <Text style={styles.runtimeText}>{status} </Text>
+                </View>
               </View>
             </View>
           </View>
-          <Text> {overview} </Text>
+          <View style={styles.bottomSection}>
+            <View style={styles.storylineContainer}>
+              <Text style={styles.title}>Storyline </Text>
+              <Text style={styles.storylineText}>{overview}</Text>
+            </View>
+            <View style={styles.genres}>
+              {genres.map(({ id, name }) => (
+                <View key={id} style={styles.batch}>
+                  <Text style={{ color: "#ffffff" }}> {name} </Text>
+                </View>
+              ))}
+            </View>
+            <View style={styles.bottomRow}>
+              <View style={styles.icon}>
+                <Fontisto name="favorite" color="#ffffff" size={16} />
+              </View>
+              <Text style={styles.bottomRowText}> {popularity} </Text>
+            </View>
+            <View style={styles.bottomRow}>
+              <View style={styles.icon}>
+                <Entypo name="calendar" color="#ffffff" size={14} />
+              </View>
+              <Text style={styles.bottomRowText}> {release_date} </Text>
+            </View>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -116,7 +164,7 @@ const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: mainColor,
   },
   container: {
     flex: 1,
@@ -129,6 +177,7 @@ const styles = StyleSheet.create({
   ratingText: {
     fontSize: 22,
     fontWeight: "bold",
+    color: "#ffffff",
   },
   overallText: {
     marginTop: 2,
@@ -137,6 +186,12 @@ const styles = StyleSheet.create({
   votesText: {
     fontSize: 20,
     marginTop: 5,
+    color: "#ffffff",
+  },
+  runtimeText: {
+    fontSize: 18,
+    marginTop: 5,
+    color: "#8B8B97",
   },
   backdrop_imageContainer: {
     width: "100%",
@@ -165,6 +220,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 20,
   },
+  bottomSection: {
+    flex: 1,
+    padding: 10,
+  },
   movieDetails: {
     paddingLeft: 10,
     paddingTop: 10,
@@ -173,6 +232,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
+    color: "#ffffff",
   },
   rating: {
     width: "100%",
@@ -188,6 +248,39 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#ffffff",
     zIndex: 200,
+  },
+  genres: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginBottom: 10,
+  },
+  storylineContainer: {
+    paddingVertical: 15,
+  },
+  storylineText: {
+    fontSize: 16,
+    color: "#ffffff",
+  },
+  bottomRow: {
+    flexDirection: "row",
+    marginTop: 6,
+  },
+  bottomRowText: {
+    marginLeft: 5,
+    color: "#ffffff",
+  },
+  icon: {
+    width: 20,
+    alignItems: "center",
+  },
+  batch: {
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    height: 30,
+    backgroundColor: "grey",
+    marginRight: 5,
+    justifyContent: "center",
+    borderRadius: 5,
   },
 });
 
