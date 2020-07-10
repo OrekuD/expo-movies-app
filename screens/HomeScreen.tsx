@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, FlatList, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { mainColor } from "../constants/Colors";
 import { Header, Card, Categories } from "../components";
 import { dummy } from "../dummy-data";
@@ -38,6 +45,13 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => <Card data={item} navigation={navigation} />}
       showsHorizontalScrollIndicator={false}
+      ListEmptyComponent={() => (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      )}
     />
   );
 
