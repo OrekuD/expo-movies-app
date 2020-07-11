@@ -3,10 +3,8 @@ import {
   Text,
   View,
   StyleSheet,
-  FlatList,
   ScrollView,
   Image,
-  ActivityIndicator,
   Platform,
   StatusBar,
 } from "react-native";

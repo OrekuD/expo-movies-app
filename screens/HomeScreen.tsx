@@ -9,9 +9,7 @@ import {
 } from "react-native";
 import { mainColor } from "../constants/Colors";
 import { Header, Card, Categories } from "../components";
-import { dummy } from "../dummy-data";
 import { StackScreenProps } from "@react-navigation/stack";
-import { width } from "../constants/Layout";
 import { ResponseObj } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
 

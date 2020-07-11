@@ -1,27 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-  Image,
-  ActivityIndicator,
-  Platform,
-  StatusBar,
-} from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import { mainColor } from "../constants/Colors";
-import {
-  Header,
-  Card,
-  Categories,
-  StarRatings,
-  TvShow,
-  Movie,
-} from "../components";
-import { dummy } from "../dummy-data";
+import { TvShow, Movie } from "../components";
 import { StackScreenProps } from "@react-navigation/stack";
-import { height, width } from "../constants/Layout";
 import { ResponseObj } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, StatusBar, Platform } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { width } from "../constants/Layout";
 import { Ionicons } from "@expo/vector-icons";
 import { BorderlessButton } from "react-native-gesture-handler";

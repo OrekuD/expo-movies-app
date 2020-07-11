@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import { RectButton } from "react-native-gesture-handler";
 import { width } from "../constants/Layout";
 import { ResponseObj } from "../types";
 

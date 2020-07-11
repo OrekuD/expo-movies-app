@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Text,
   View,
   StyleSheet,
-  FlatList,
   ScrollView,
   Image,
-  ActivityIndicator,
   Platform,
   StatusBar,
 } from "react-native";
@@ -34,6 +32,8 @@ const TvShow: React.FC<Props> = ({ data, navigation }) => {
     popularity,
     status,
     original_name,
+    number_of_seasons,
+    first_air_date,
   } = data;
   return (
     <ScrollView style={styles.scrollView}>
@@ -106,12 +106,12 @@ const TvShow: React.FC<Props> = ({ data, navigation }) => {
                   </View>
                   <Text style={styles.votesText}> {vote_count} votes</Text>
                 </View>
-                <View style={styles.row}>
+                <View style={{ ...styles.row, flexWrap: "wrap" }}>
+                  <Text style={styles.runtimeText}>Tv Show | </Text>
                   <Text style={styles.runtimeText}>
-                    {" "}
-                    "Fix something" min |{" "}
+                    {number_of_seasons} seasons |{" "}
                   </Text>
-                  <Text style={styles.runtimeText}>{status} </Text>
+                  <Text style={styles.runtimeText}>{status}</Text>
                 </View>
               </View>
             </View>
@@ -138,7 +138,7 @@ const TvShow: React.FC<Props> = ({ data, navigation }) => {
               <View style={styles.icon}>
                 <Entypo name="calendar" color="#ffffff" size={14} />
               </View>
-              <Text style={styles.bottomRowText}> Fix something </Text>
+              <Text style={styles.bottomRowText}> {first_air_date} </Text>
             </View>
           </View>
         </View>

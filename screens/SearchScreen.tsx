@@ -13,7 +13,6 @@ import {
 import { mainColor } from "../constants/Colors";
 import { StackScreenProps } from "@react-navigation/stack";
 import { width, height } from "../constants/Layout";
-import { dummy } from "../dummy-data";
 import { CategoryCard } from "../components";
 import { ResponseObj } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
@@ -87,7 +86,7 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
                 paddingTop: 200,
               }}
             >
-              <Text style={styles.text}> No movies found </Text>
+              <Text style={styles.text}> No results found </Text>
             </View>
           ) : (
             <>

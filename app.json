@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-movie-app",
-    "slug": "expo-movie-app",
+    "name": "Movies app",
+    "slug": "Movies",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,11 +15,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.opoku.moviesapp",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.opoku.moviesapp",
+      "versionCode": 1,
+      "enableDangerousExperimentalLeanBuilds": true
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

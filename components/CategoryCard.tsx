@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { width } from "../constants/Layout";
-import { RectButton } from "react-native-gesture-handler";
 import { ResponseObj } from "../types";
 import StarRatings from "./StarRatings";
 

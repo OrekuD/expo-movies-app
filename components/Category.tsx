@@ -7,9 +7,7 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
-import { dummy } from "../dummy-data";
 import CategoryCard from "./CategoryCard";
-import { width } from "../constants/Layout";
 import { ResponseObj } from "../types";
 
 interface Props {
