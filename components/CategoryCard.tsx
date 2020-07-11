@@ -26,11 +26,23 @@ const CategoryCard: React.FC<Props> = ({ data, navigation }) => {
         style={styles.imageContainer}
         activeOpacity={0.7}
       >
-        <Image
-          source={{ uri: `https://image.tmdb.org/t/p/w500${poster_path}` }}
-          style={styles.image}
-          resizeMode="cover"
-        />
+        {poster_path ? (
+          <Image
+            source={{ uri: `https://image.tmdb.org/t/p/w500${poster_path}` }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        ) : (
+          <View
+            style={{
+              height: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text> No image </Text>
+          </View>
+        )}
         <View style={styles.content}>
           <View style={styles.textContainer}>
             <Text style={styles.text}>{title}</Text>

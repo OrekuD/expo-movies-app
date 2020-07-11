@@ -96,20 +96,50 @@ const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
       </RectButton>
       <View style={styles.container}>
         <View style={styles.backdrop_imageContainer}>
-          <Image
-            source={{ uri: `https://image.tmdb.org/t/p/w500${backdrop_path}` }}
-            style={styles.backdrop_image}
-            resizeMode="cover"
-          />
+          {backdrop_path ? (
+            <Image
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${backdrop_path}`,
+              }}
+              style={styles.backdrop_image}
+              resizeMode="cover"
+            />
+          ) : (
+            <View
+              style={{
+                ...styles.backdrop_image,
+                backgroundColor: "#ffffff",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text> No image </Text>
+            </View>
+          )}
           <View style={styles.overlay} />
         </View>
         <View style={styles.content}>
           <View style={styles.topSection}>
-            <Image
-              source={{ uri: `https://image.tmdb.org/t/p/w500${poster_path}` }}
-              style={styles.poster_image}
-              resizeMode="cover"
-            />
+            {poster_path ? (
+              <Image
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w500${poster_path}`,
+                }}
+                style={styles.poster_image}
+                resizeMode="cover"
+              />
+            ) : (
+              <View
+                style={{
+                  ...styles.poster_image,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "#ffffff",
+                }}
+              >
+                <Text> No image </Text>
+              </View>
+            )}
             <View style={styles.movieDetails}>
               <Text style={styles.title}>{title}</Text>
               <View style={styles.rating}>

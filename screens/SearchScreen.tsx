@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { mainColor } from "../constants/Colors";
 import { StackScreenProps } from "@react-navigation/stack";
-import { width } from "../constants/Layout";
+import { width, height } from "../constants/Layout";
 import { dummy } from "../dummy-data";
 import { CategoryCard } from "../components";
 import { ResponseObj } from "../types";
@@ -45,6 +45,7 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
       } else {
         setSearchResults(data.results);
         setIsSearching(false);
+        setNoResults(false);
       }
     } catch (error) {
       Alert.alert("Slow network", "Check your network and try again");
@@ -59,7 +60,11 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
         returnKeyType="search"
         placeholder="Search for movies..."
         value={searchTerm}
-        onChangeText={(text) => setSearch(text)}
+        onChangeText={(text) => {
+          setSearchResults([]);
+          setSearch(text);
+          setIsSearching(true);
+        }}
         onSubmitEditing={searchForMovies}
         autoFocus
       />
@@ -72,9 +77,10 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
           {noResults ? (
             <View
               style={{
-                flex: 1,
+                height: height,
+                width: width,
                 alignItems: "center",
-                justifyContent: "center",
+                paddingTop: 200,
               }}
             >
               <Text style={styles.text}> No movies found </Text>
@@ -88,11 +94,9 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
               </Text>
               <FlatList
                 data={searchResults}
-                renderItem={({ item }) => {
-                  if (item.poster_path) {
-                    <CategoryCard data={item} navigation={navigation} />;
-                  }
-                }}
+                renderItem={({ item }) => (
+                  <CategoryCard data={item} navigation={navigation} />
+                )}
                 numColumns={2}
                 columnWrapperStyle={{
                   flexDirection: "row",
