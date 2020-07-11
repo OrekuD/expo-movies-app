@@ -11,32 +11,18 @@ import {
   StatusBar,
 } from "react-native";
 import { mainColor } from "../constants/Colors";
-import { Header, Card, Categories, StarRatings } from "../components";
-import { dummy } from "../dummy-data";
-import { StackScreenProps } from "@react-navigation/stack";
+import StarRatings from "./StarRatings";
 import { height, width } from "../constants/Layout";
-import { ResponseObj, Movie } from "../types";
-import { MOVIE_DB_API_KEY } from "../constants/Api";
+import { MovieProps } from "../types";
 import { RectButton } from "react-native-gesture-handler";
 import { Ionicons, Fontisto, Entypo } from "@expo/vector-icons";
 
-const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
-  const data: ResponseObj = route.params.data;
-  const {
-    // poster_path,
-    // backdrop_path,
-    // title,
-    // overview,
-    // popularity,
-    // release_date,
-    // vote_average,
-    // vote_count,
-    // adult,
-    // original_language,
-    id,
-  } = data;
+interface Props {
+  data: MovieProps;
+  navigation: any;
+}
 
-  const [movieDetails, setMovieDetails] = useState<Movie>({});
+const Movie: React.FC<Props> = ({ data, navigation }) => {
   const {
     title,
     overview,
@@ -51,41 +37,8 @@ const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
     runtime,
     status,
     tagline,
-  } = movieDetails;
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${MOVIE_DB_API_KEY}&language=en-US`,
-      {
-        headers: {
-          "Cache-Control": "no-cache",
-        },
-      }
-    );
-    const data = await response.json();
-    // console.log(data);
-    setMovieDetails(data);
-  };
-
-  if (!movieDetails.title) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: mainColor,
-        }}
-      >
-        <ActivityIndicator size="large" color="#ffffff" />
-      </View>
-    );
-  }
-
+    original_name,
+  } = data;
   return (
     <ScrollView style={styles.scrollView}>
       <RectButton
@@ -140,8 +93,12 @@ const MovieScreen: React.FC<StackScreenProps<{}>> = ({ navigation, route }) => {
                 <Text> No image </Text>
               </View>
             )}
-            <View style={styles.movieDetails}>
-              <Text style={styles.title}>{title}</Text>
+            <View style={styles.details}>
+              {title ? (
+                <Text style={styles.title}>{title}</Text>
+              ) : (
+                <Text style={styles.title}>{original_name}</Text>
+              )}
               <View style={styles.rating}>
                 <StarRatings rating={vote_average} />
                 <View
@@ -254,7 +211,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-  movieDetails: {
+  details: {
     paddingLeft: 10,
     paddingTop: 10,
     flex: 1,
@@ -314,4 +271,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MovieScreen;
+export default Movie;

@@ -16,6 +16,7 @@ import { width, height } from "../constants/Layout";
 import { dummy } from "../dummy-data";
 import { CategoryCard } from "../components";
 import { ResponseObj } from "../types";
+import { MOVIE_DB_API_KEY } from "../constants/Api";
 
 const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   const [searchTerm, setSearch] = useState<string>("");
@@ -31,7 +32,7 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
     }
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=005d6a62314e432e6fe64e784f23f799&language=en-US&query=${searchTerm}&page=1&include_adult=false`,
+        `https://api.themoviedb.org/3/search/multi?api_key=${MOVIE_DB_API_KEY}&language=en-US&query=${searchTerm}&page=1&include_adult=false`,
         {
           headers: {
             "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -39,11 +40,14 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
         }
       );
       const data = await response.json();
-      if (data.results.length === 0) {
+      const results = data.results.filter(
+        (item: any) => item.media_type === "tv" || item.media_type === "movie"
+      );
+      if (results.length === 0) {
         setNoResults(true);
         setIsSearching(false);
       } else {
-        setSearchResults(data.results);
+        setSearchResults(results);
         setIsSearching(false);
         setNoResults(false);
       }

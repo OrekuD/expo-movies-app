@@ -18,7 +18,7 @@ interface Props {
 }
 
 const CategoryCard: React.FC<Props> = ({ data, navigation }) => {
-  const { poster_path, title, vote_average } = data;
+  const { poster_path, title, vote_average, original_name } = data;
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -45,7 +45,11 @@ const CategoryCard: React.FC<Props> = ({ data, navigation }) => {
         )}
         <View style={styles.content}>
           <View style={styles.textContainer}>
-            <Text style={styles.text}>{title}</Text>
+            {title ? (
+              <Text style={styles.text}>{title}</Text>
+            ) : (
+              <Text style={styles.text}>{original_name}</Text>
+            )}
           </View>
           <StarRatings rating={vote_average} />
         </View>
