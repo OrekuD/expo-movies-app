@@ -22,10 +22,8 @@ import {
 import { dummy } from "../dummy-data";
 import { StackScreenProps } from "@react-navigation/stack";
 import { height, width } from "../constants/Layout";
-import { ResponseObj, MovieProps, TvShowProps } from "../types";
+import { ResponseObj } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
-import { RectButton } from "react-native-gesture-handler";
-import { Ionicons, Fontisto, Entypo } from "@expo/vector-icons";
 
 const DetailsScreen: React.FC<StackScreenProps<{}>> = ({
   navigation,
@@ -42,7 +40,7 @@ const DetailsScreen: React.FC<StackScreenProps<{}>> = ({
   const fetchData = async () => {
     let response;
 
-    if (media_type === "movie") {
+    if (media_type === "movie" || !media_type) {
       response = await fetch(
         `https://api.themoviedb.org/3/movie/${id}?api_key=${MOVIE_DB_API_KEY}&language=en-US`,
         {

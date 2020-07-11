@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   backdrop_imageContainer: {
     width: "100%",
-    height: height > 620 ? height * 0.35 : height * 0.45,
+    height: height * 0.3,
     position: "relative",
   },
   backdrop_image: {

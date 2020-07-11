@@ -8,7 +8,7 @@ export interface ResponseObj {
   original_language: string;
   original_title: string;
   original_name?: string;
-  genre_ids: Array<>;
+  genre_ids: Array<number>;
   backdrop_path: string;
   adult: boolean;
   overview: string;
@@ -69,7 +69,7 @@ export interface TvShowProps {
     gender: number;
     profile_path: string;
   }>;
-  episode_run_time: Array<number, number>;
+  episode_run_time: Array<number>;
   first_air_date: string;
   genres: Array<{
     id: number;
