@@ -28,7 +28,7 @@ export interface ResponseObj {
   overview: string;
   poster_path: string;
   popularity: number;
-  media_type: "tv" | "movie";
+  media_type: tv | movie;
 }
 
 export interface MovieProps {
@@ -140,6 +140,22 @@ export interface TvShowProps {
   }>;
   status: string;
   type: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface TvResponse {
+  backdrop_path: string;
+  first_air_date: string;
+  genre_ids: Array<number>;
+  id: number;
+  name: string;
+  origin_country: Array<string>;
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
   vote_average: number;
   vote_count: number;
 }

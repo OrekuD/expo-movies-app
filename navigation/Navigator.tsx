@@ -28,6 +28,7 @@ const TabScreen: React.FC = () => {
       tabBarOptions={{
         showLabel: false,
         style: { height: 70, backgroundColor: colors.deep },
+        keyboardHidesTabBar: true,
       }}
       screenOptions={{ tabBarVisible: showTabBar }}
     >
@@ -88,6 +89,7 @@ const CategoriesStackScreen: React.FC = () => {
     <CategoriesStack.Navigator headerMode="none">
       <CategoriesStack.Screen name="Categories" component={CategoriesScreen} />
       <CategoriesStack.Screen name="Movie" component={DetailsScreen} />
+      <CategoriesStack.Screen name="Search" component={SearchStackScreen} />
     </CategoriesStack.Navigator>
   );
 };

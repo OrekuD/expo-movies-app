@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, Alert } from "react-native";
 import { mainColor } from "../constants/Colors";
 import { TvShow, Movie } from "../components";
 import { StackScreenProps } from "@react-navigation/stack";
 import { ResponseObj } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
+import { useAppContext } from "../context/Context";
 
 const DetailsScreen: React.FC<StackScreenProps<{}>> = ({
   navigation,
@@ -13,36 +14,46 @@ const DetailsScreen: React.FC<StackScreenProps<{}>> = ({
   const data: ResponseObj = route.params.data;
   const { media_type, id } = data;
   const [details, setDetails] = useState<any>({});
+  const { colors, toggleTabbar } = useAppContext();
 
   useEffect(() => {
     fetchData();
+    toggleTabbar(false);
+
+    return () => {
+      toggleTabbar(true);
+    };
   }, []);
 
   const fetchData = async () => {
-    let response;
+    try {
+      let response;
 
-    if (media_type === "movie" || !media_type) {
-      response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${MOVIE_DB_API_KEY}&language=en-US`,
-        {
-          headers: {
-            "Cache-Control": "no-cache",
-          },
-        }
-      );
-    } else if (media_type === "tv") {
-      response = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}?api_key=${MOVIE_DB_API_KEY}&language=en-US`,
-        {
-          headers: {
-            "Cache-Control": "no-cache",
-          },
-        }
-      );
+      if (media_type === "movie" || !media_type) {
+        response = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${MOVIE_DB_API_KEY}&language=en-US`,
+          {
+            headers: {
+              "Cache-Control": "no-cache",
+            },
+          }
+        );
+      } else if (media_type === "tv") {
+        response = await fetch(
+          `https://api.themoviedb.org/3/tv/${id}?api_key=${MOVIE_DB_API_KEY}&language=en-US`,
+          {
+            headers: {
+              "Cache-Control": "no-cache",
+            },
+          }
+        );
+      }
+      const data = await response?.json();
+      // console.log(data);
+      setDetails(data);
+    } catch (error) {
+      Alert.alert("", "");
     }
-    const data = await response?.json();
-    // console.log(data);
-    setDetails(data);
   };
 
   if (!details.id) {
@@ -52,7 +63,7 @@ const DetailsScreen: React.FC<StackScreenProps<{}>> = ({
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: mainColor,
+          backgroundColor: colors.background,
         }}
       >
         <ActivityIndicator size="large" color="#ffffff" />

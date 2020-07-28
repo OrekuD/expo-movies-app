@@ -6,3 +6,4 @@ export { default as CategoryCard } from "./CategoryCard";
 export { default as StarRatings } from "./StarRatings";
 export { default as TvShow } from "./TvShow";
 export { default as Movie } from "./Movie";
+export { default as AiringToday } from "./AiringToday";

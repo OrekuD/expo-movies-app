@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { mainColor } from "../constants/Colors";
-import { Header, Card, Categories } from "../components";
+import { Header, Card, Categories, AiringToday } from "../components";
 import { StackScreenProps } from "@react-navigation/stack";
 import { ResponseObj } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
@@ -56,7 +56,7 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
 
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
-      <Header navigation={navigation} text="Discover" />
+      {/* <Header navigation={navigation} text="Discover" />
 
       <View
         style={{
@@ -73,16 +73,35 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
           sliderWidth={width}
           itemWidth={width * 0.75}
         />
-      </View>
+      </View> */}
 
-      {/* <FlatList
+      <FlatList
         data={[""]}
-        ListHeaderComponent={header}
+        ListHeaderComponent={() => (
+          <Header navigation={navigation} text="Discover" />
+        )}
         ListHeaderComponentStyle={styles.row}
         keyExtractor={(item) => Math.random().toString()}
-        renderItem={({ item }) => <View />}
-        ListFooterComponent={() => <Categories navigation={navigation} />}
-      /> */}
+        renderItem={({ item }) => (
+          <View
+            style={{
+              height: 220,
+              justifyContent: "center",
+              paddingVertical: 10,
+            }}
+          >
+            <Carousel
+              data={data}
+              renderItem={({ item, index }) => (
+                <Card data={item} navigation={navigation} />
+              )}
+              sliderWidth={width}
+              itemWidth={width * 0.75}
+            />
+          </View>
+        )}
+        ListFooterComponent={() => <AiringToday navigation={navigation} />}
+      />
     </View>
   );
 };

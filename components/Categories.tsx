@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 24,
     marginLeft: 20,
-    fontFamily: "Alegreya",
   },
   categories: {
     flexDirection: "row",
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 15,
     paddingVertical: 5,
-    borderRadius: 20,
+    borderRadius: 5,
   },
   selected: {
     backgroundColor: "#ffffff",
@@ -127,7 +126,6 @@ const styles = StyleSheet.create({
   listText: {
     fontSize: 16,
     color: "#ffffff",
-    fontFamily: "Alegreya",
   },
 });
 

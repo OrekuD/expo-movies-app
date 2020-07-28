@@ -99,6 +99,7 @@ const CategoriesScreen: React.FC<Props> = ({ navigation }) => {
                   style={{
                     ...styles.listText,
                     color: index === selectedIndex ? mainColor : colors.text,
+                    fontWeight: index === selectedIndex ? "bold" : "100",
                   }}
                 >
                   {name}
@@ -121,7 +122,6 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 24,
     marginLeft: 20,
-    fontFamily: "Alegreya",
   },
   categories: {
     flexDirection: "row",
@@ -135,14 +135,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 15,
     paddingVertical: 5,
-    borderRadius: 20,
+    borderRadius: 5,
   },
   selected: {
     backgroundColor: "grey",
   },
   listText: {
     fontSize: 16,
-    fontFamily: "Alegreya",
   },
 });
 

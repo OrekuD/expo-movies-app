@@ -10,6 +10,7 @@ import {
 import { width } from "../constants/Layout";
 import { ResponseObj } from "../types";
 import StarRatings from "./StarRatings";
+import { useAppContext } from "../context/Context";
 
 interface Props {
   data: ResponseObj;
@@ -17,9 +18,10 @@ interface Props {
 }
 
 const CategoryCard: React.FC<Props> = ({ data, navigation }) => {
+  const { colors } = useAppContext();
   const { poster_path, title, vote_average, original_name } = data;
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: colors.deep }}>
       <TouchableOpacity
         onPress={() => navigation.navigate("Movie", { data })}
         style={styles.imageContainer}
@@ -45,9 +47,13 @@ const CategoryCard: React.FC<Props> = ({ data, navigation }) => {
         <View style={styles.content}>
           <View style={styles.textContainer}>
             {title ? (
-              <Text style={styles.text}>{title}</Text>
+              <Text style={{ ...styles.text, color: colors.text }}>
+                {title}
+              </Text>
             ) : (
-              <Text style={styles.text}>{original_name}</Text>
+              <Text style={{ ...styles.text, color: colors.text }}>
+                {original_name}
+              </Text>
             )}
           </View>
           <StarRatings rating={vote_average} />
@@ -66,8 +72,7 @@ const styles = StyleSheet.create({
     height: width * 0.45 * 1.5 + 85,
     borderRadius: 5,
     marginBottom: (width * 0.1) / 3,
-    backgroundColor: "#ffffff",
-    elevation: 3,
+    elevation: 1,
     overflow: "hidden",
   },
   imageContainer: {
@@ -76,7 +81,7 @@ const styles = StyleSheet.create({
   },
   content: {
     marginVertical: 5,
-    paddingHorizontal: 3,
+    paddingHorizontal: 5,
     justifyContent: "space-between",
   },
   image: {

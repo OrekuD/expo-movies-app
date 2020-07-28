@@ -38,14 +38,6 @@ const Movie: React.FC<Props> = ({ data, navigation }) => {
     original_name,
   } = data;
 
-  useEffect(() => {
-    toggleTabbar(false);
-
-    return () => {
-      toggleTabbar(true);
-    };
-  }, []);
-
   return (
     <ScrollView style={styles.scrollView}>
       <RectButton

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -16,12 +16,22 @@ import { width, height } from "../constants/Layout";
 import { CategoryCard } from "../components";
 import { ResponseObj } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
+import { useAppContext } from "../context/Context";
 
 const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   const [searchTerm, setSearch] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Array<ResponseObj>>([]);
   const [noResults, setNoResults] = useState<boolean>(false);
   const [isSearching, setIsSearching] = useState<boolean>(true);
+  const { colors, toggleTabbar } = useAppContext();
+
+  useEffect(() => {
+    toggleTabbar(false);
+
+    return () => {
+      toggleTabbar(true);
+    };
+  }, []);
 
   const searchForMovies = async () => {
     setSearchResults([]);
@@ -57,7 +67,7 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: colors.background }}>
       <TextInput
         style={styles.textInput}
         returnKeyType="search"

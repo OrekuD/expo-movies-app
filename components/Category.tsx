@@ -30,20 +30,22 @@ const Category: React.FC<Props> = ({ name, navigation, id }) => {
   }, [id]);
 
   const fetchData = async () => {
-    if (!isActive) {
-      return;
-    }
-    const response = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=005d6a62314e432e6fe64e784f23f799&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2017-01-01&primary_release_date.lte=2020-12-31&vote_average.gte=6&with_genres=${id}`,
-      {
-        headers: {
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-        },
+    try {
+      if (!isActive) {
+        return;
       }
-    );
-    const data = await response.json();
-    setData(data.results);
-    // console.log(data.results[0]);
+      const response = await fetch(
+        `https://api.themoviedb.org/3/discover/movie?api_key=005d6a62314e432e6fe64e784f23f799&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2017-01-01&primary_release_date.lte=2020-12-31&vote_average.gte=6&with_genres=${id}`,
+        {
+          headers: {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+          },
+        }
+      );
+      const data = await response.json();
+      setData(data.results);
+      // console.log(data.results[0]);
+    } catch (error) {}
   };
   return (
     <View style={styles.container}>
