@@ -23,7 +23,7 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   const [searchResults, setSearchResults] = useState<Array<ResponseObj>>([]);
   const [noResults, setNoResults] = useState<boolean>(false);
   const [isSearching, setIsSearching] = useState<boolean>(true);
-  const { colors, toggleTabbar } = useAppContext();
+  const { colors, toggleTabbar, darkTheme } = useAppContext();
 
   useEffect(() => {
     toggleTabbar(false);
@@ -69,9 +69,12 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
       <TextInput
-        style={styles.textInput}
+        style={{
+          ...styles.textInput,
+          backgroundColor: darkTheme ? "rgba(1, 1, 1, 0.5)" : "#212121",
+        }}
         returnKeyType="search"
-        placeholder="Search for movies..."
+        placeholder="Search for movies, tv shows..."
         value={searchTerm}
         onChangeText={(text) => {
           setSearchResults([]);
@@ -83,7 +86,7 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
       />
       {isSearching && searchResults.length === 0 ? (
         <View style={styles.loader}>
-          <ActivityIndicator size="large" color="#ffffff" />
+          <ActivityIndicator size="large" color={colors.text} />
         </View>
       ) : (
         <View style={styles.searchResults}>
@@ -100,10 +103,12 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
             </View>
           ) : (
             <>
-              <Text style={styles.text}>
+              <Text style={{ ...styles.text, color: colors.text }}>
                 {"  "}
                 Search results for{" "}
-                <Text style={{ fontWeight: "bold" }}>{searchTerm} </Text>
+                <Text style={{ fontWeight: "bold", color: colors.text }}>
+                  {searchTerm}{" "}
+                </Text>
               </Text>
               <FlatList
                 data={searchResults}
@@ -129,14 +134,12 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: mainColor,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 5 : 40,
+    paddingTop: 10,
   },
   textInput: {
     width: width * 0.95,
     height: 50,
     borderRadius: 25,
-    backgroundColor: "rgba(1, 1, 1, 0.5)",
     fontSize: 16,
     paddingLeft: 20,
     alignSelf: "center",
