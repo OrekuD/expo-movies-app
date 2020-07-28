@@ -1,3 +1,14 @@
+export interface AppContext {
+  darkTheme: boolean;
+  toggleTheme: () => void;
+  colors: Colors;
+}
+
+export interface Colors {
+  background: string;
+  text: string;
+}
+
 export interface ResponseObj {
   id: number;
   video: boolean;

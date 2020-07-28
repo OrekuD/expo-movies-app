@@ -31,10 +31,8 @@ const Movie: React.FC<Props> = ({ data, navigation }) => {
     genres,
     popularity,
     release_date,
-    revenue,
     runtime,
     status,
-    tagline,
     original_name,
   } = data;
   return (

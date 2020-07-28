@@ -12,6 +12,8 @@ import { Header, Card, Categories } from "../components";
 import { StackScreenProps } from "@react-navigation/stack";
 import { ResponseObj } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
+import Carousel from "react-native-snap-carousel";
+import { width } from "../constants/Layout";
 
 const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   const [data, setData] = useState<Array<ResponseObj>>([]);
@@ -53,14 +55,32 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
-      <FlatList
+
+      <View
+        style={{
+          height: 220,
+          justifyContent: "center",
+          paddingVertical: 10,
+        }}
+      >
+        <Carousel
+          data={data}
+          renderItem={({ item, index }) => (
+            <Card data={item} navigation={navigation} />
+          )}
+          sliderWidth={width}
+          itemWidth={width * 0.75}
+        />
+      </View>
+
+      {/* <FlatList
         data={[""]}
         ListHeaderComponent={header}
         ListHeaderComponentStyle={styles.row}
         keyExtractor={(item) => Math.random().toString()}
         renderItem={({ item }) => <View />}
         ListFooterComponent={() => <Categories navigation={navigation} />}
-      />
+      /> */}
     </View>
   );
 };

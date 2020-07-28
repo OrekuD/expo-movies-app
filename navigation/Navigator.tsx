@@ -1,20 +1,29 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { HomeScreen, SearchScreen, DetailsScreen } from "../screens";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  HomeScreen,
+  SearchScreen,
+  DetailsScreen,
+  SettingsScreen,
+  CategoriesScreen,
+} from "../screens";
 import { StatusBar } from "react-native";
 import { mainColor } from "../constants/Colors";
+import { useAppContext } from "../context/Context";
 
-const Stack = createStackNavigator();
+const HomeStack = createStackNavigator();
 const SearchStack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-const StackScreen: React.FC = () => {
+const TabScreen: React.FC = () => {
   return (
-    <Stack.Navigator headerMode="none">
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Movie" component={DetailsScreen} />
-      <Stack.Screen name="Search" component={SearchStackScreen} />
-    </Stack.Navigator>
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeStackScreen} />
+      <Tab.Screen name="Categories" component={CategoriesScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
   );
 };
 
@@ -27,15 +36,25 @@ const SearchStackScreen: React.FC = () => {
   );
 };
 
+const HomeStackScreen: React.FC = () => {
+  return (
+    <HomeStack.Navigator headerMode="none">
+      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen name="Movie" component={DetailsScreen} />
+      <HomeStack.Screen name="Search" component={SearchStackScreen} />
+    </HomeStack.Navigator>
+  );
+};
+
 const MainNavigator: React.FC = () => {
+  const { colors, darkTheme } = useAppContext();
   return (
     <NavigationContainer>
       <StatusBar
-        barStyle="light-content"
-        backgroundColor="transparent"
-        translucent
+        backgroundColor={colors.background}
+        barStyle={darkTheme ? "light-content" : "dark-content"}
       />
-      <StackScreen />
+      <TabScreen />
     </NavigationContainer>
   );
 };
