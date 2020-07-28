@@ -3,7 +3,7 @@ import { View, ActivityIndicator, Alert } from "react-native";
 import { mainColor } from "../constants/Colors";
 import { TvShow, Movie } from "../components";
 import { StackScreenProps } from "@react-navigation/stack";
-import { ResponseObj } from "../types";
+import { ResponseObj, TvResponse } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
 import { useAppContext } from "../context/Context";
 
@@ -11,13 +11,14 @@ const DetailsScreen: React.FC<StackScreenProps<{}>> = ({
   navigation,
   route,
 }) => {
-  const data: ResponseObj = route.params.data;
+  const data: ResponseObj | TvResponse = route.params.data;
   const { media_type, id } = data;
   const [details, setDetails] = useState<any>({});
   const { colors, toggleTabbar } = useAppContext();
 
   useEffect(() => {
     fetchData();
+    console.log(data.media_type);
     toggleTabbar(false);
 
     return () => {
@@ -38,7 +39,7 @@ const DetailsScreen: React.FC<StackScreenProps<{}>> = ({
             },
           }
         );
-      } else if (media_type === "tv") {
+      } else if (media_type === "tv" || !media_type) {
         response = await fetch(
           `https://api.themoviedb.org/3/tv/${id}?api_key=${MOVIE_DB_API_KEY}&language=en-US`,
           {

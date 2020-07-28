@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import CategoryCard from "./CategoryCard";
 import { ResponseObj } from "../types";
+import { MOVIE_DB_API_KEY } from "../constants/Api";
 
 interface Props {
   name?: string;
@@ -35,7 +36,7 @@ const Category: React.FC<Props> = ({ name, navigation, id }) => {
         return;
       }
       const response = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=005d6a62314e432e6fe64e784f23f799&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2017-01-01&primary_release_date.lte=2020-12-31&vote_average.gte=6&with_genres=${id}`,
+        `https://api.themoviedb.org/3/discover/movie?api_key=${MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2017-01-01&primary_release_date.lte=2020-12-31&vote_average.gte=6&with_genres=${id}`,
         {
           headers: {
             "Cache-Control": "no-cache, no-store, must-revalidate",

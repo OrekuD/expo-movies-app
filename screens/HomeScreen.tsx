@@ -8,16 +8,22 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { mainColor } from "../constants/Colors";
-import { Header, Card, Categories, AiringToday } from "../components";
-import { StackScreenProps } from "@react-navigation/stack";
-import { ResponseObj } from "../types";
+import { Header, Card, AiringToday } from "../components";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { ResponseObj, TvResponse } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
 import Carousel from "react-native-snap-carousel";
 import { width } from "../constants/Layout";
 import { useAppContext } from "../context/Context";
 
-const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
-  const [data, setData] = useState<Array<ResponseObj>>([]);
+const config = {
+  headers: {
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+  },
+};
+const HomeScreen: React.FC<BottomTabScreenProps<{}>> = ({ navigation }) => {
+  const [movies, setMovies] = useState<Array<ResponseObj>>([]);
+  const [tv, setTv] = useState<Array<TvResponse>>([]);
   const { colors } = useAppContext();
 
   useEffect(() => {
@@ -25,62 +31,27 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   }, []);
 
   const fetchData = async () => {
-    const response = await fetch(
+    const responseTrending = await fetch(
       `https://api.themoviedb.org/3/trending/movie/day?api_key=${MOVIE_DB_API_KEY}`,
-      {
-        headers: {
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-        },
-      }
+      config
     );
-    const data = await response.json();
-    setData(data.results);
+    const moviesData = await responseTrending.json();
+    const responseTv = await fetch(
+      `https://api.themoviedb.org/3/tv/airing_today?api_key=${MOVIE_DB_API_KEY}&language=en-US&page=1`,
+      config
+    );
+    const tvData = await responseTv.json();
+    setTv(tvData.results);
+    setMovies(moviesData.results);
   };
 
-  const header = () => (
-    <FlatList
-      horizontal
-      data={data}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => <Card data={item} navigation={navigation} />}
-      showsHorizontalScrollIndicator={false}
-      ListEmptyComponent={() => (
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <ActivityIndicator size="large" color="#ffffff" />
-        </View>
-      )}
-    />
-  );
-
   return (
-    <View style={{ ...styles.container, backgroundColor: colors.background }}>
-      {/* <Header navigation={navigation} text="Discover" />
-
-      <View
-        style={{
-          height: 220,
-          justifyContent: "center",
-          paddingVertical: 10,
-        }}
-      >
-        <Carousel
-          data={data}
-          renderItem={({ item, index }) => (
-            <Card data={item} navigation={navigation} />
-          )}
-          sliderWidth={width}
-          itemWidth={width * 0.75}
-        />
-      </View> */}
-
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <FlatList
         data={[""]}
         ListHeaderComponent={() => (
           <Header navigation={navigation} text="Discover" />
         )}
-        ListHeaderComponentStyle={styles.row}
         keyExtractor={(item) => Math.random().toString()}
         renderItem={({ item }) => (
           <View
@@ -91,7 +62,7 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
             }}
           >
             <Carousel
-              data={data}
+              data={movies}
               renderItem={({ item, index }) => (
                 <Card data={item} navigation={navigation} />
               )}
@@ -100,17 +71,15 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
             />
           </View>
         )}
-        ListFooterComponent={() => <AiringToday navigation={navigation} />}
+        ListFooterComponent={() => (
+          <AiringToday data={tv} navigation={navigation} />
+        )}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: mainColor,
-    flex: 1,
-  },
   row: {
     marginHorizontal: 10,
     overflow: "hidden",

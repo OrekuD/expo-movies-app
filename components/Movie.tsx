@@ -13,7 +13,12 @@ import StarRatings from "./StarRatings";
 import { height, width } from "../constants/Layout";
 import { MovieProps } from "../types";
 import { RectButton } from "react-native-gesture-handler";
-import { Ionicons, Fontisto, Entypo } from "@expo/vector-icons";
+import {
+  Ionicons,
+  Fontisto,
+  Entypo,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { useAppContext } from "../context/Context";
 
 interface Props {
@@ -39,12 +44,16 @@ const Movie: React.FC<Props> = ({ data, navigation }) => {
   } = data;
 
   return (
-    <ScrollView style={styles.scrollView}>
+    <ScrollView style={{ backgroundColor: colors.background }}>
       <RectButton
         onPress={() => navigation.goBack()}
-        style={styles.closeButton}
+        style={{ ...styles.closeButton, backgroundColor: colors.background }}
       >
-        <Ionicons name="md-arrow-round-back" size={20} color={mainColor} />
+        <MaterialCommunityIcons
+          name="chevron-left"
+          size={30}
+          color={colors.text}
+        />
       </RectButton>
       <View style={styles.container}>
         <View style={styles.backdrop_imageContainer}>
@@ -65,7 +74,7 @@ const Movie: React.FC<Props> = ({ data, navigation }) => {
                 justifyContent: "center",
               }}
             >
-              <Text> No image </Text>
+              <Text style={{ color: colors.text }}> No image </Text>
             </View>
           )}
           <View style={styles.overlay} />
@@ -89,14 +98,18 @@ const Movie: React.FC<Props> = ({ data, navigation }) => {
                   backgroundColor: "#ffffff",
                 }}
               >
-                <Text> No image </Text>
+                <Text style={{ color: colors.text }}> No image </Text>
               </View>
             )}
             <View style={styles.details}>
               {title ? (
-                <Text style={styles.title}>{title}</Text>
+                <Text style={{ ...styles.title, color: colors.text }}>
+                  {title}
+                </Text>
               ) : (
-                <Text style={styles.title}>{original_name}</Text>
+                <Text style={{ ...styles.title, color: colors.text }}>
+                  {original_name}
+                </Text>
               )}
               <View style={styles.rating}>
                 <StarRatings rating={vote_average} />
@@ -104,22 +117,35 @@ const Movie: React.FC<Props> = ({ data, navigation }) => {
                   style={{ ...styles.row, justifyContent: "space-between" }}
                 >
                   <View style={{ ...styles.row }}>
-                    <Text style={styles.ratingText}> {vote_average} </Text>
+                    <Text style={{ ...styles.ratingText, color: colors.text }}>
+                      {vote_average}
+                    </Text>
                     <Text style={styles.overallText}> / 10 </Text>
                   </View>
-                  <Text style={styles.votesText}> {vote_count} votes</Text>
+                  <Text style={{ ...styles.votesText, color: colors.text }}>
+                    {" "}
+                    {vote_count} votes
+                  </Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.runtimeText}> {runtime} min | </Text>
-                  <Text style={styles.runtimeText}>{status} </Text>
+                  <Text style={{ ...styles.runtimeText, color: colors.text }}>
+                    {runtime} min |
+                  </Text>
+                  <Text style={{ ...styles.runtimeText, color: colors.text }}>
+                    {status}
+                  </Text>
                 </View>
               </View>
             </View>
           </View>
           <View style={styles.bottomSection}>
             <View style={styles.storylineContainer}>
-              <Text style={styles.title}>Storyline </Text>
-              <Text style={styles.storylineText}>{overview}</Text>
+              <Text style={{ ...styles.title, color: colors.text }}>
+                Storyline
+              </Text>
+              <Text style={{ ...styles.storylineText, color: colors.text }}>
+                {overview}
+              </Text>
             </View>
             <View style={styles.genres}>
               {genres.map(({ id, name }) => (
@@ -130,15 +156,21 @@ const Movie: React.FC<Props> = ({ data, navigation }) => {
             </View>
             <View style={styles.bottomRow}>
               <View style={styles.icon}>
-                <Fontisto name="favorite" color="#ffffff" size={16} />
+                <Fontisto name="favorite" color={colors.text} size={16} />
               </View>
-              <Text style={styles.bottomRowText}> {popularity} </Text>
+              <Text style={{ ...styles.bottomRowText, color: colors.text }}>
+                {" "}
+                {popularity}{" "}
+              </Text>
             </View>
             <View style={styles.bottomRow}>
               <View style={styles.icon}>
-                <Entypo name="calendar" color="#ffffff" size={14} />
+                <Entypo name="calendar" color={colors.text} size={14} />
               </View>
-              <Text style={styles.bottomRowText}> {release_date} </Text>
+              <Text style={{ ...styles.bottomRowText, color: colors.text }}>
+                {" "}
+                {release_date}{" "}
+              </Text>
             </View>
           </View>
         </View>
@@ -150,7 +182,6 @@ const Movie: React.FC<Props> = ({ data, navigation }) => {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    backgroundColor: mainColor,
   },
   container: {
     flex: 1,
@@ -163,7 +194,6 @@ const styles = StyleSheet.create({
   ratingText: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#ffffff",
   },
   overallText: {
     marginTop: 2,
@@ -172,7 +202,6 @@ const styles = StyleSheet.create({
   votesText: {
     fontSize: 20,
     marginTop: 5,
-    color: "#ffffff",
   },
   runtimeText: {
     fontSize: 18,
@@ -218,7 +247,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#ffffff",
   },
   rating: {
     width: "100%",
@@ -232,7 +260,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 20,
-    backgroundColor: "#ffffff",
     zIndex: 200,
   },
   genres: {
@@ -245,7 +272,6 @@ const styles = StyleSheet.create({
   },
   storylineText: {
     fontSize: 16,
-    color: "#ffffff",
   },
   bottomRow: {
     flexDirection: "row",
@@ -253,20 +279,18 @@ const styles = StyleSheet.create({
   },
   bottomRowText: {
     marginLeft: 5,
-    color: "#ffffff",
   },
   icon: {
     width: 20,
     alignItems: "center",
   },
   batch: {
-    paddingVertical: 3,
-    paddingHorizontal: 6,
-    height: 30,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 20,
     backgroundColor: "grey",
     marginRight: 5,
-    justifyContent: "center",
-    borderRadius: 5,
+    marginBottom: 5,
   },
 });
 

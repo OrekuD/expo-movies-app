@@ -13,7 +13,13 @@ import StarRatings from "./StarRatings";
 import { height, width } from "../constants/Layout";
 import { TvShowProps } from "../types";
 import { RectButton } from "react-native-gesture-handler";
-import { Ionicons, Fontisto, Entypo } from "@expo/vector-icons";
+import {
+  Ionicons,
+  Fontisto,
+  Entypo,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { useAppContext } from "../context/Context";
 
 interface Props {
   data: TvShowProps;
@@ -21,6 +27,7 @@ interface Props {
 }
 
 const TvShow: React.FC<Props> = ({ data, navigation }) => {
+  const { colors } = useAppContext();
   const {
     name,
     overview,
@@ -36,12 +43,16 @@ const TvShow: React.FC<Props> = ({ data, navigation }) => {
     first_air_date,
   } = data;
   return (
-    <ScrollView style={styles.scrollView}>
+    <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
       <RectButton
         onPress={() => navigation.goBack()}
-        style={styles.closeButton}
+        style={{ ...styles.closeButton, backgroundColor: colors.background }}
       >
-        <Ionicons name="md-arrow-round-back" size={20} color={mainColor} />
+        <MaterialCommunityIcons
+          name="chevron-left"
+          size={30}
+          color={colors.text}
+        />
       </RectButton>
       <View style={styles.container}>
         <View style={styles.backdrop_imageContainer}>
@@ -57,12 +68,12 @@ const TvShow: React.FC<Props> = ({ data, navigation }) => {
             <View
               style={{
                 ...styles.backdrop_image,
-                backgroundColor: "#ffffff",
+                backgroundColor: colors.background,
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <Text> No image </Text>
+              <Text style={{ color: colors.text }}> No image </Text>
             </View>
           )}
           <View style={styles.overlay} />
@@ -83,17 +94,21 @@ const TvShow: React.FC<Props> = ({ data, navigation }) => {
                   ...styles.poster_image,
                   alignItems: "center",
                   justifyContent: "center",
-                  backgroundColor: "#ffffff",
+                  backgroundColor: colors.background,
                 }}
               >
-                <Text> No image </Text>
+                <Text style={{ color: colors.text }}> No image </Text>
               </View>
             )}
             <View style={styles.details}>
               {name ? (
-                <Text style={styles.name}>{name}</Text>
+                <Text style={{ ...styles.name, color: colors.text }}>
+                  {name}
+                </Text>
               ) : (
-                <Text style={styles.name}>{original_name}</Text>
+                <Text style={{ ...styles.name, color: colors.text }}>
+                  {original_name}
+                </Text>
               )}
               <View style={styles.rating}>
                 <StarRatings rating={vote_average} />
@@ -101,25 +116,36 @@ const TvShow: React.FC<Props> = ({ data, navigation }) => {
                   style={{ ...styles.row, justifyContent: "space-between" }}
                 >
                   <View style={{ ...styles.row }}>
-                    <Text style={styles.ratingText}> {vote_average} </Text>
+                    <Text style={{ ...styles.ratingText, color: colors.text }}>
+                      {" "}
+                      {vote_average}{" "}
+                    </Text>
                     <Text style={styles.overallText}> / 10 </Text>
                   </View>
                   <Text style={styles.votesText}> {vote_count} votes</Text>
                 </View>
                 <View style={{ ...styles.row, flexWrap: "wrap" }}>
-                  <Text style={styles.runtimeText}>Tv Show | </Text>
-                  <Text style={styles.runtimeText}>
+                  <Text style={{ ...styles.runtimeText, color: colors.text }}>
+                    Tv Show |{" "}
+                  </Text>
+                  <Text style={{ ...styles.runtimeText, color: colors.text }}>
                     {number_of_seasons} seasons |{" "}
                   </Text>
-                  <Text style={styles.runtimeText}>{status}</Text>
+                  <Text style={{ ...styles.runtimeText, color: colors.text }}>
+                    {status}
+                  </Text>
                 </View>
               </View>
             </View>
           </View>
           <View style={styles.bottomSection}>
             <View style={styles.storylineContainer}>
-              <Text style={styles.name}>Storyline </Text>
-              <Text style={styles.storylineText}>{overview}</Text>
+              <Text style={{ ...styles.name, color: colors.text }}>
+                Storyline{" "}
+              </Text>
+              <Text style={{ ...styles.storylineText, color: colors.text }}>
+                {overview}
+              </Text>
             </View>
             <View style={styles.genres}>
               {genres.map(({ id, name }) => (
@@ -130,15 +156,21 @@ const TvShow: React.FC<Props> = ({ data, navigation }) => {
             </View>
             <View style={styles.bottomRow}>
               <View style={styles.icon}>
-                <Fontisto name="favorite" color="#ffffff" size={16} />
+                <Fontisto name="favorite" color={colors.text} size={16} />
               </View>
-              <Text style={styles.bottomRowText}> {popularity} </Text>
+              <Text style={{ ...styles.bottomRowText, color: colors.text }}>
+                {" "}
+                {popularity}{" "}
+              </Text>
             </View>
             <View style={styles.bottomRow}>
               <View style={styles.icon}>
-                <Entypo name="calendar" color="#ffffff" size={14} />
+                <Entypo name="calendar" color={colors.text} size={14} />
               </View>
-              <Text style={styles.bottomRowText}> {first_air_date} </Text>
+              <Text style={{ ...styles.bottomRowText, color: colors.text }}>
+                {" "}
+                {first_air_date}{" "}
+              </Text>
             </View>
           </View>
         </View>
@@ -260,13 +292,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   batch: {
-    paddingVertical: 3,
-    paddingHorizontal: 6,
-    height: 30,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 20,
     backgroundColor: "grey",
     marginRight: 5,
-    justifyContent: "center",
-    borderRadius: 5,
+    marginBottom: 5,
   },
 });
 

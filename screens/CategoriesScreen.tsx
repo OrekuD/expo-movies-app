@@ -9,12 +9,11 @@ import {
 import { Category, Header } from "../components";
 import { mainColor } from "../constants/Colors";
 import { useAppContext } from "../context/Context";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
-interface Props {
-  navigation?: any;
-}
-
-const CategoriesScreen: React.FC<Props> = ({ navigation }) => {
+const CategoriesScreen: React.FC<BottomTabScreenProps<{}>> = ({
+  navigation,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const { colors } = useAppContext();
 
@@ -75,8 +74,6 @@ const CategoriesScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
-      {/* <Header text="Browse" navigation={navigation} /> */}
-      {/* {genres[selectedIndex].component} */}
       <FlatList
         ListHeaderComponent={() => (
           <Header text="Browse" navigation={navigation} />
