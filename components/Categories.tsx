@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Category from "./Category";
 import { mainColor } from "../constants/Colors";
+import { useAppContext } from "../context/Context";
 
 interface Props {
   navigation?: any;
@@ -9,6 +10,7 @@ interface Props {
 
 const Categories: React.FC<Props> = ({ navigation }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const { colors } = useAppContext();
 
   const genres = [
     {
@@ -66,7 +68,7 @@ const Categories: React.FC<Props> = ({ navigation }) => {
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: colors.background }}>
       <Text style={styles.text}> Browse by categories </Text>
       <View style={styles.categories}>
         {genres.map(({ name, id }, index) => (
@@ -98,7 +100,6 @@ const Categories: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
   },
   text: {
     color: "#ffffff",

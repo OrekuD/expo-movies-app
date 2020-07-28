@@ -12,17 +12,64 @@ import {
 import { StatusBar } from "react-native";
 import { mainColor } from "../constants/Colors";
 import { useAppContext } from "../context/Context";
+import { Category, Categories } from "../components";
+import { genres } from "../constants/Genres";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 const HomeStack = createStackNavigator();
 const SearchStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const CategoriesStack = createStackNavigator();
 
 const TabScreen: React.FC = () => {
+  const { colors, darkTheme, showTabBar } = useAppContext();
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeStackScreen} />
-      <Tab.Screen name="Categories" component={CategoriesScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+    <Tab.Navigator
+      tabBarOptions={{
+        showLabel: false,
+        style: { height: 70, backgroundColor: colors.deep },
+      }}
+      screenOptions={{ tabBarVisible: showTabBar }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeStackScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <MaterialIcons
+              name="dashboard"
+              color={focused ? colors.text : "grey"}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Categories"
+        component={CategoriesStackScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <MaterialIcons
+              name="explore"
+              color={focused ? colors.text : "grey"}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name="ios-settings"
+              color={focused ? colors.text : "grey"}
+              size={34}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -33,6 +80,15 @@ const SearchStackScreen: React.FC = () => {
       <SearchStack.Screen name="Search" component={SearchScreen} />
       <SearchStack.Screen name="Movie" component={DetailsScreen} />
     </SearchStack.Navigator>
+  );
+};
+
+const CategoriesStackScreen: React.FC = () => {
+  return (
+    <CategoriesStack.Navigator headerMode="none">
+      <CategoriesStack.Screen name="Categories" component={CategoriesScreen} />
+      <CategoriesStack.Screen name="Movie" component={DetailsScreen} />
+    </CategoriesStack.Navigator>
   );
 };
 

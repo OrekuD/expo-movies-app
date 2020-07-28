@@ -14,6 +14,7 @@ import { height, width } from "../constants/Layout";
 import { MovieProps } from "../types";
 import { RectButton } from "react-native-gesture-handler";
 import { Ionicons, Fontisto, Entypo } from "@expo/vector-icons";
+import { useAppContext } from "../context/Context";
 
 interface Props {
   data: MovieProps;
@@ -21,6 +22,7 @@ interface Props {
 }
 
 const Movie: React.FC<Props> = ({ data, navigation }) => {
+  const { colors, toggleTabbar } = useAppContext();
   const {
     title,
     overview,
@@ -35,6 +37,15 @@ const Movie: React.FC<Props> = ({ data, navigation }) => {
     status,
     original_name,
   } = data;
+
+  useEffect(() => {
+    toggleTabbar(false);
+
+    return () => {
+      toggleTabbar(true);
+    };
+  }, []);
+
   return (
     <ScrollView style={styles.scrollView}>
       <RectButton

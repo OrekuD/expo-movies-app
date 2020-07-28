@@ -43,7 +43,7 @@ const Category: React.FC<Props> = ({ name, navigation, id }) => {
     );
     const data = await response.json();
     setData(data.results);
-    console.log(data.results[0]);
+    // console.log(data.results[0]);
   };
   return (
     <View style={styles.container}>

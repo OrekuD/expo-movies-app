@@ -14,9 +14,11 @@ import { ResponseObj } from "../types";
 import { MOVIE_DB_API_KEY } from "../constants/Api";
 import Carousel from "react-native-snap-carousel";
 import { width } from "../constants/Layout";
+import { useAppContext } from "../context/Context";
 
 const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   const [data, setData] = useState<Array<ResponseObj>>([]);
+  const { colors } = useAppContext();
 
   useEffect(() => {
     fetchData();
@@ -53,8 +55,8 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
-      <Header navigation={navigation} />
+    <View style={{ ...styles.container, backgroundColor: colors.background }}>
+      <Header navigation={navigation} text="Discover" />
 
       <View
         style={{

@@ -11,14 +11,21 @@ const Context = createContext<AppContext>({
   darkTheme: false,
   toggleTheme: () => {},
   colors: light,
+  showTabBar: true,
+  toggleTabbar: () => {},
 });
 
 const Provider = ({ children }: ProviderProps) => {
   const [darkTheme, setTheme] = useState<boolean>(false);
+  const [showTabBar, setShowTabBar] = useState<boolean>(true);
   const [colors, setColors] = useState<Colors>(light);
 
   const toggleTheme = () => {
     setTheme(!darkTheme);
+  };
+
+  const toggleTabbar = (state: boolean) => {
+    setShowTabBar(state);
   };
 
   useEffect(() => {
@@ -33,6 +40,8 @@ const Provider = ({ children }: ProviderProps) => {
     colors,
     darkTheme,
     toggleTheme,
+    toggleTabbar,
+    showTabBar,
   };
   return <Context.Provider value={state}>{children}</Context.Provider>;
 };

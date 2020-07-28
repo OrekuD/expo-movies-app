@@ -3,21 +3,31 @@ import { Text, View, StyleSheet } from "react-native";
 import { width } from "../constants/Layout";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { BorderlessButton } from "react-native-gesture-handler";
+import { useAppContext } from "../context/Context";
 
 interface Props {
   navigation: any;
+  text: string;
+  noIcon?: boolean;
 }
 
-const Header: React.FC<Props> = ({ navigation }) => {
+const Header: React.FC<Props> = ({ navigation, text, noIcon }) => {
+  const { colors } = useAppContext();
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.text}> MovieApp </Text> */}
-      <BorderlessButton
-        onPress={() => navigation.navigate("Search")}
-        style={styles.searchButton}
-      >
-        <Feather name="search" color="#ffffff" size={28} />
-      </BorderlessButton>
+      <View style={styles.top}>
+        {!noIcon && (
+          <BorderlessButton
+            onPress={() => navigation.navigate("Search")}
+            style={styles.searchButton}
+          >
+            <Feather name="search" color={colors.text} size={26} />
+          </BorderlessButton>
+        )}
+      </View>
+      <View style={styles.bottom}>
+        <Text style={{ ...styles.text, color: colors.text }}>{text}</Text>
+      </View>
     </View>
   );
 };
@@ -26,16 +36,22 @@ const styles = StyleSheet.create({
   container: {
     width: width,
     height: 100,
-    paddingTop: 20,
     paddingHorizontal: 20,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
+    marginTop: 10,
+  },
+  top: {
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  bottom: {
+    flex: 1.5,
+    justifyContent: "center",
   },
   text: {
-    fontSize: 26,
+    fontSize: 33,
     color: "#ffffff",
-    fontFamily: "Alegreya",
+    fontWeight: "bold",
   },
   searchButton: {
     width: 40,
