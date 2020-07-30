@@ -52,7 +52,7 @@ const DetailsScreen: React.FC<StackScreenProps<{}>> = ({
       // console.log(data);
       setDetails(data);
     } catch (error) {
-      Alert.alert("", "");
+      Alert.alert("Network error", "Try again later");
     }
   };
 
