@@ -134,7 +134,7 @@ const SearchScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 30,
   },
   textInput: {
     width: width * 0.95,
@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     alignSelf: "center",
     color: "#ffffff",
+    marginTop: 15,
   },
   searchResults: {
     paddingTop: 20,
