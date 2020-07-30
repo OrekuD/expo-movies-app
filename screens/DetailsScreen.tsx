@@ -18,7 +18,6 @@ const DetailsScreen: React.FC<StackScreenProps<{}>> = ({
 
   useEffect(() => {
     fetchData();
-    console.log(data.media_type);
     toggleTabbar(false);
 
     return () => {

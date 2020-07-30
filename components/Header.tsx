@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Platform, StatusBar } from "react-native";
 import { width } from "../constants/Layout";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { BorderlessButton } from "react-native-gesture-handler";
@@ -35,9 +35,10 @@ const Header: React.FC<Props> = ({ navigation, text, noIcon }) => {
 const styles = StyleSheet.create({
   container: {
     width: width,
-    height: 100,
+    height: 120,
     paddingHorizontal: 20,
     marginTop: 10,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 30,
   },
   top: {
     flex: 1,

@@ -2,6 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
   HomeScreen,
   SearchScreen,
@@ -9,17 +10,25 @@ import {
   SettingsScreen,
   CategoriesScreen,
 } from "../screens";
+import PopularTv from "../screens/PopularTv";
+import TopRatedTv from "../screens/TopRatedTv";
 import { StatusBar } from "react-native";
 import { mainColor } from "../constants/Colors";
 import { useAppContext } from "../context/Context";
 import { Category, Categories } from "../components";
 import { genres } from "../constants/Genres";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+  Feather,
+} from "@expo/vector-icons";
 
 const HomeStack = createStackNavigator();
 const SearchStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const CategoriesStack = createStackNavigator();
+const Tv = createMaterialTopTabNavigator();
 
 const TabScreen: React.FC = () => {
   const { colors, darkTheme, showTabBar } = useAppContext();
@@ -40,7 +49,7 @@ const TabScreen: React.FC = () => {
             <MaterialIcons
               name="dashboard"
               color={focused ? colors.text : "grey"}
-              size={30}
+              size={28}
             />
           ),
         }}
@@ -50,14 +59,27 @@ const TabScreen: React.FC = () => {
         component={CategoriesStackScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <MaterialIcons
-              name="explore"
+            <MaterialCommunityIcons
+              name="movie-roll"
               color={focused ? colors.text : "grey"}
               size={30}
             />
           ),
         }}
       />
+      {/* <Tab.Screen
+        name="Tv"
+        component={TvNavigator}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Feather
+              name="tv"
+              color={focused ? colors.text : "grey"}
+              size={28}
+            />
+          ),
+        }}
+      /> */}
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
@@ -66,7 +88,7 @@ const TabScreen: React.FC = () => {
             <Ionicons
               name="ios-settings"
               color={focused ? colors.text : "grey"}
-              size={34}
+              size={32}
             />
           ),
         }}
@@ -81,6 +103,15 @@ const SearchStackScreen: React.FC = () => {
       <SearchStack.Screen name="Search" component={SearchScreen} />
       <SearchStack.Screen name="Movie" component={DetailsScreen} />
     </SearchStack.Navigator>
+  );
+};
+
+const TvNavigator: React.FC = () => {
+  return (
+    <Tv.Navigator>
+      <Tv.Screen name="Popular" component={PopularTv} />
+      <Tv.Screen name="TopRated" component={TopRatedTv} />
+    </Tv.Navigator>
   );
 };
 
@@ -109,8 +140,9 @@ const MainNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <StatusBar
-        backgroundColor={colors.background}
+        backgroundColor="transparent"
         barStyle={darkTheme ? "light-content" : "dark-content"}
+        translucent
       />
       <TabScreen />
     </NavigationContainer>
