@@ -1,6 +1,6 @@
 ## Expo Movie App
 
-An application built with Expo, thta use the TMDB Api.
+An application built with Expo, that use the [TMDB Api](https://developers.themoviedb.org/).
 
 #### Screenshots
 
